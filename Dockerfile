@@ -2,5 +2,5 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY . .
-EXPOSE 80
+EXPOSE 99
 CMD ["nginx", "-g", "daemon off;"]
