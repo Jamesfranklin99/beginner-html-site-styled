@@ -16,7 +16,7 @@ node("slave-agent"){
     }
     
     stage("Deploy Application on Kubernetes"){
-        sh "helm upgrade --install kubernetes-application ${chartPath} -f ${valuesFile} --set image.tag=${params.ImageTag} -n application"
+        sh "sudo helm upgrade --install kubernetes-application ${chartPath} -f ${valuesFile} --set image.tag=${params.ImageTag} -n application"
     }
     
 }

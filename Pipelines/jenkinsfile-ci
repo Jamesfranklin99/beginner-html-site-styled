@@ -20,5 +20,13 @@ node("slave-agent"){
     stage("Docker Push Image"){
         sh "sudo docker push ${imageTag}"
     }
+
+    stage('Trigger CD Job') {
+        build job: 'Application-Pipeline-CI', 
+              parameters: [
+                  string(name: 'ImageTag', value: '${imageTag}')
+              ], 
+              wait: false
+    }
     
 }
