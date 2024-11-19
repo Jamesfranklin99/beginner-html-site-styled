@@ -22,7 +22,7 @@ node("slave-agent"){
     }
 
     stage('Trigger CD Job') {
-        build job: 'Application-Pipeline-CI', 
+        build job: 'Application-Pipeline-CD', 
               parameters: [
                   string(name: 'ImageTag', value: '${imageTag}')
               ], 
