@@ -1,0 +1,16 @@
+replicaCount: 5
+
+image:
+  tag: latest
+
+service:
+  port: 5000
+  nodePort: 30000 # Custom NodePort within the range 30000–32767
+
+tolerations:
+  - key: "node"
+    operator: "Equal"
+    value: "worker"
+    effect: "NoSchedule"
+
+imageSecret: "dockerhub-image-pull-secret"

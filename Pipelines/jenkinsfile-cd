@@ -1,0 +1,22 @@
+node("slave-agent"){
+    
+    def imageTag="davidmason99109/kubernetes-project:${BUILD_NUMBER}"
+    def codeDest="app"
+    def gitRepo="git@github.com:Jamesfranklin99/beginner-html-site-styled.git"
+    def gitBranch="gh-pages"
+    def gitCreds="github"
+    def chartPath="$WORKSPACE/Pipelines/helm"
+    def valuesFile="$WORKSPACE/Pipelines/helm/values.yaml"
+    
+    stage('Clone Repository') {
+        sh "mkdir -p app"
+        dir(codeDest) {
+            git url: "${gitRepo}", branch: "${gitBranch}", credentialsId: "${gitCreds}"
+        }
+    }
+    
+    stage("Deploy Application on Kubernetes"){
+        sh "helm upgrade --install kubernetes-application ${chartPath} -f ${valuesFile} --set image.tag=${params.ImageTag} -n application"
+    }
+    
+}
