@@ -5,8 +5,8 @@ node("slave-agent"){
     def gitRepo="git@github.com:Jamesfranklin99/beginner-html-site-styled.git"
     def gitBranch="gh-pages"
     def gitCreds="github"
-    def chartPath="$WORKSPACE/Pipelines/helm"
-    def valuesFile="$WORKSPACE/Pipelines/helm/values.yaml"
+    def chartPath="$WORKSPACE/app/Pipelines/helm"
+    def valuesFile="$WORKSPACE/app/Pipelines/helm/values.yaml"
     
     stage('Clone Repository') {
         sh "mkdir -p app"
@@ -16,7 +16,7 @@ node("slave-agent"){
     }
     
     stage("Deploy Application on Kubernetes"){
-        sh "sudo helm upgrade --install kubernetes-application ${chartPath} -f ${valuesFile} --set image.tag=${params.ImageTag} -n application"
+        sh "sudo KUBECONFIG=/home/ubuntu/.kube/config helm upgrade --install kubernetes-application ${chartPath} -f ${valuesFile} --set image.tag=${params.ImageTag} -n application"
     }
     
 }
